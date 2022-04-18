@@ -35,8 +35,18 @@ const CurrentWeather = () => {
 
 
     const d = new Date().toLocaleTimeString()
-    console.log(new Date(weatherData?.dt*1000+(weatherData.timezone*1000)))
+    const dateTime=new Date(weatherData?.dt*1000+(weatherData.timezone*1000))
+  
 
+
+    function convertUTCDateToLocalDate(date) {
+        date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
+        return date;
+    }
+    var date = convertUTCDateToLocalDate(new Date(dateTime));
+    console.log(date.toLocaleString())
+
+  
     //loading on component mount and after some interval
     useEffect(() => {
         getWeather()
@@ -72,7 +82,7 @@ const CurrentWeather = () => {
                                 {isData ?
                                     <div>
                                         <h2 className='my-3 text-dark'>{weatherData?.name}, <span className='country'>{weatherData?.sys?.country}</span></h2>
-                                        <div className='d-flex justify-content-between'><span>{d}</span> <span className="dot">Date</span></div>
+                                        <div className='d-flex justify-content-between'><span>{dateTime.toLocaleTimeString() + ' (GMT)'}</span> <span className="dot">{dateTime.toLocaleDateString()}</span></div>
                                         <div className='d-flex align-items-center justify-content-lg-between my-4'>
                                             <h1>{Math.round(weatherData.main?.temp)}℃</h1>
                                             <div className="sky">

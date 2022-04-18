@@ -1,70 +1,13 @@
-# Getting Started with Create React App
+PRE-REQUIREMENTS
+The task asks to make an application that search the current weather of a specific city. The city which we want to search will be read from a config file which is .env in my case. The application will read data from an API first time when application will be loaded and then will read data periodically in minutes that will also be defined in config file. To get data, I have to use open weather Api and I am using 
+openweathermap.org for fetching data. For using their Api, we need to make an account on it and then get API KEYS that will be fitted into URL which they will give and enable you to get data. They have lot of different URLS for fetching data in different aspects like on the basis of city id, longitude, lattitude and more. We will be using Api based on city.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+EXECUTION 
+I am using React JS (version 18.0.0) for the developing this application. In React, I used React hooks (Functional Components). I made a new component called CurrentWeather, made required states with the help of useState hook and fetch data in a function using axios library. And then called that function in useEffect hook which is responsible for mounting data on load and also under some conditions. We also want to read data from Api again after some minutes and for that I used javascript setInterval in useEffect hook that takes a function and time to execute that function after given time. 
 
-## Available Scripts
+BONUS
+By default, city will be coming from config file (.env). But you can also search for another city's weather.
 
-In the project directory, you can run:
+RUNNING
+Just download it from github repo, run "npm install" and then after installation of node modules run "npm start" to start the application.
 
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
