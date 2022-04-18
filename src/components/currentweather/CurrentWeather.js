@@ -5,6 +5,7 @@ import Moment from 'react-moment';
 
 const CurrentWeather = () => {
     let textInput = React.createRef();
+    const [weatherArray, setWeatherArray] = useState([]) //Will contain array inside weather data object
     const [weatherData, setWeatherData] = useState({}) //Will contain data from Api
     const key = process.env.REACT_APP_WEATHER_API_KEY  //Api Key of open weather from .env 
     const defaultcity = process.env.REACT_APP_WEATHER_LOCATION //default city from .env
@@ -13,16 +14,20 @@ const CurrentWeather = () => {
     const [loader, setLoader] = useState(false) //loader 
     const reFetchTime = parseInt(process.env.REACT_APP_MINUTES) * 60 //Static time in minutes from .env
     const [time, setTime] = useState(new Date().toLocaleTimeString())
+    const [date, setDate] = useState(new Date().toLocaleDateString())
+    const [weekday, setWeekDay] = useState(new Date().toLocaleString("default", { weekday: 'long' }))
 
     //fetching data from api
     const getWeather = () => {
         setLoader(true)
         setTime(new Date().toLocaleTimeString())
+        setWeekDay(new Date().toLocaleString("default", { weekday: 'long' }))
+        setDate(new Date().toLocaleDateString())
         axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${key}`)
             .then((res) => {
                 setWeatherData(res.data)
+                setWeatherArray(res.data.weather)
                 setLoader(false)
-                console.log(res.data)
             }).catch((err) => {
                 setLoader(false)
                 if (err.response.status === 404) {
@@ -32,21 +37,6 @@ const CurrentWeather = () => {
             })
     }
 
-
-
-    const d = new Date().toLocaleTimeString()
-    const dateTime=new Date(weatherData?.dt*1000+(weatherData.timezone*1000))
-  
-
-
-    function convertUTCDateToLocalDate(date) {
-        date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
-        return date;
-    }
-    var date = convertUTCDateToLocalDate(new Date(dateTime));
-    console.log(date.toLocaleString())
-
-  
     //loading on component mount and after some interval
     useEffect(() => {
         getWeather()
@@ -82,9 +72,14 @@ const CurrentWeather = () => {
                                 {isData ?
                                     <div>
                                         <h2 className='my-3 text-dark'>{weatherData?.name}, <span className='country'>{weatherData?.sys?.country}</span></h2>
-                                        <div className='d-flex justify-content-between'><span>{dateTime.toLocaleTimeString() + ' (GMT)'}</span> <span className="dot">{dateTime.toLocaleDateString()}</span></div>
+                                        <div className='d-flex justify-content-between'><span>{time}</span> <span className="dot">{`${weekday}, ${date}`}</span></div>
                                         <div className='d-flex align-items-center justify-content-lg-between my-4'>
-                                            <h1>{Math.round(weatherData.main?.temp)}℃</h1>
+                                            <div>
+                                                <h1>{Math.round(weatherData.main?.temp)}℃</h1>
+                                                <p><span>{weatherArray[0]?.main}</span></p>
+                                            </div>
+
+
                                             <div className="sky">
                                                 <div className="sun"></div>
                                                 <div className="cloud">
